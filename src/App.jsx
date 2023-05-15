@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import ytdl from 'ytdl-core';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dlLink, setDlLink] = useState('');
+
+  const handleInputChange = (event) => {
+    setDlLink(event.target.value);
+  };
+
+  const handleDownload = () => {
+    if (dlLink) {
+      // Perform download logic using the dlLink state value
+      const videoUrl = dlLink;
+      const videoInfo = ytdl.getInfo(videoUrl);
+
+      videoInfo.then((info) => {
+        const videoTitle = info.videoDetails.title;
+        const downloadOptions = {
+          quality: 'highest',
+        };
+
+        const videoReadableStream = ytdl(videoUrl, downloadOptions);
+        const downloadLink = URL.createObjectURL(videoReadableStream);
+        const downloadElement = document.createElement('a');
+
+        downloadElement.href = downloadLink;
+        downloadElement.download = `${videoTitle}.mp4`;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        document.body.removeChild(downloadElement);
+
+        console.log('Downloading:', videoTitle);
+      }).catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <input type="text" placeholder="Enter YT link" onChange={handleInputChange} />
+      <button onClick={handleDownload}>Download</button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

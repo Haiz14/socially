@@ -1,11 +1,15 @@
+Versions are subject to change, they are meant just for reference
+
+
 V0.1: Youtube downlaoder
 
 - shell html with yt-link input
 - Use ytdp-core to downlaod videos
+- Add Vercel page link
 
 V0.2: Better looks and download controls
 
 - Ui work
-- Mire feature to come
+- Quality selection
 
 V 0.3: Instagram Dl support

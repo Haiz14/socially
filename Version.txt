@@ -1,0 +1,11 @@
+V0.1: Youtube downlaoder
+
+- shell html with yt-link input
+- Use ytdp-core to downlaod videos
+
+V0.2: Better looks and download controls
+
+- Ui work
+- Mire feature to come
+
+V 0.3: Instagram Dl support
